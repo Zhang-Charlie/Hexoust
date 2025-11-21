@@ -48,7 +48,7 @@ HexOust/
 
 ## Screenshots
 
-![Screenshot](Hexoust.png)
+<img src="images/Hexoust.png" width="320" />
 
 ## Future Improvements
 
