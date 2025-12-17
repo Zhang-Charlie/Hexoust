@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -339,6 +338,18 @@ public class HexGrid extends JPanel {
     /** Timer to control the animation of confetti. */
     private Timer confettiTimer;
 
+    private static BufferedImage loadImageResource(String resourcePath) throws IOException {
+        try (var inputStream = HexGrid.class.getResourceAsStream(resourcePath)) {
+            if (inputStream == null) {
+                throw new IOException("Image resource not found: " + resourcePath);
+            }
+            BufferedImage image = ImageIO.read(inputStream);
+            if (image == null) {
+                throw new IOException("Failed to decode image resource: " + resourcePath);
+            }
+            return image;
+        }
+    }
 
 
     /**
@@ -349,9 +360,9 @@ public class HexGrid extends JPanel {
     public HexGrid(ArrayList<ArrayList<Point>> hexagons) {
         this.grid = hexagons;
         try {
-            backgroundImage = ImageIO.read(new File("sky.jpg")); // adds the image in the background (of a sky)
-            Texture = ImageIO.read(new File("Texture.jpg")); // adds the texture
-            cloudButtonImage = ImageIO.read(new File("cloud.png"));
+            backgroundImage = loadImageResource("/images/sky.jpg"); // adds the image in the background (of a sky)
+            Texture = loadImageResource("/images/Texture.jpg"); // adds the texture
+            cloudButtonImage = loadImageResource("/images/cloud.png");
             cloudButtonBounds = new Rectangle(700, 300, 200, 200); // x, y, width, height
 
         } catch (IOException e) {
